@@ -5,22 +5,15 @@ function find() {
 }
 
 function findById(id) {
-	console.log(id);
 	return db('schemes').where({ id }).first();
 }
 
 function findSteps(id) {
 	return db
-		.select(
-			'steps.id',
-			'schemes.scheme_name',
-			'steps.step_number',
-			'steps.step_number',
-			'steps.instructions'
-		)
+		.select('*')
 		.from('steps')
 		.join('schemes', 'steps.scheme_id', 'schemes.id')
-		.where('steps.scheme_id', id)
+		.where({ scheme_id: id })
 		.orderBy('steps.step_number');
 }
 
@@ -32,8 +25,8 @@ function update(changes, id) {
 	return db('schemes')
 		.where({ id })
 		.update(changes)
-		.then((ids) => {
-			return findByID;
+		.then((res) => {
+			return db('schemes').where({ id });
 		});
 }
 
